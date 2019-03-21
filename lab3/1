@@ -1,0 +1,25 @@
+package Ex1;
+
+import Ex1.Matrix;
+import java.lang.Integer;
+import java.util.Scanner;
+
+import static java.lang.Integer.valueOf;
+
+public class Control {
+    public static void main (String []args) throws Exception {
+        System.out.println("Write length and width of your matrix: ");
+        Scanner scanner=new Scanner(System.in);
+        int length = scanner.nextInt();
+        int width = scanner.nextInt();
+        int init = scanner.nextInt();
+        Matrix<Integer> matrixFirst= new Matrix<Integer>(length,width,new Integer[length][width],init);
+        System.out.println("Write length and width of your matrix: ");
+        Scanner scannerSecond=new Scanner(System.in);
+        length = scannerSecond.nextInt();
+        width = scannerSecond.nextInt();
+        Matrix<Integer> matrixSecond= new Matrix<Integer>(length,width,new Integer[length][width],init);
+        matrixFirst.add(matrixSecond);
+        System.out.println(matrixFirst);
+    }
+}
