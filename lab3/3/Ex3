@@ -1,0 +1,14 @@
+package Ex3;
+
+import java.util.Scanner;
+
+public class Control {
+    public static void main (String []args){
+        System.out.println("Write main string and substring: ");
+        Scanner scanner= new Scanner(System.in);
+        String a=scanner.nextLine();
+        String b=scanner.nextLine();
+        Exercise3 ex=new Exercise3();
+        System.out.println(ex.substring(a,b));
+    }
+}
