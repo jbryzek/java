@@ -38,28 +38,32 @@ public class Form implements ActionListener {
 
 
     public Form(){
-        DefaultListModel<String> listModel=new DefaultListModel<>();
-        listModel.addElement(new listOfFunctions("Sinus","sin").toString());
-        listModel.addElement(new listOfFunctions("Cosinus","cos").toString());
-        listModel.addElement(new listOfFunctions("Tangens","tan").toString());
-        listModel.addElement(new listOfFunctions("Cotangens","ctg").toString());
-        listModel.addElement(new listOfFunctions("Logarytm","ln").toString());
-        listModel.addElement(new listOfFunctions("Liczba pi","pi").toString());
-        listModel.addElement(new listOfFunctions("Liczba Eulera","e").toString());
-        listModel.addElement(new listOfFunctions("Omega","Om").toString());
-        listModel.addElement(new listOfFunctions("Dodawanie","+").toString());
-        listModel.addElement(new listOfFunctions("Odejmowanie","-").toString());
-        listModel.addElement(new listOfFunctions("Mnozenie","*").toString());
-        listModel.addElement(new listOfFunctions("Dzielenie","/").toString());
-        listModel.addElement("Last result");
+        DefaultListModel<listOfFunctions> listModel=new DefaultListModel<>();
+        listModel.addElement(new listOfFunctions("Sinus","sin"));
+        listModel.addElement(new listOfFunctions("Cosinus","cos"));
+        listModel.addElement(new listOfFunctions("Tangens","tan"));
+        listModel.addElement(new listOfFunctions("Cotangens","ctan"));
+        listModel.addElement(new listOfFunctions("Logarytm","ln"));
+        listModel.addElement(new listOfFunctions("Liczba pi","pi"));
+        listModel.addElement(new listOfFunctions("Liczba Eulera","e"));
+        listModel.addElement(new listOfFunctions("Omega","Om"));
+        listModel.addElement(new listOfFunctions("Dodawanie","+"));
+        listModel.addElement(new listOfFunctions("Odejmowanie","-"));
+        listModel.addElement(new listOfFunctions("Mnozenie","*"));
+        listModel.addElement(new listOfFunctions("Dzielenie","/"));
+        listModel.addElement(new listOfFunctions("Last result","Last result"));
         functionsList.setModel(listModel);
-        
+
         functionsList.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
 
                 String item = (String) functionsList.getSelectedValue();
-                formulaInput.setText(formulaInput.getText() + item + "()");
+                if(item=="sin"||item=="cos"||item=="tan"||item=="ctan") {
+                    formulaInput.setText(formulaInput.getText() + item + "()");
+                }else {
+                    formulaInput.setText(formulaInput.getText() + item);
+                }
                 formulaInput.requestFocus();
                 formulaInput.setCaretPosition(formulaInput.getText().length() - 1);
             }
