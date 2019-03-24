@@ -38,23 +38,22 @@ public class Form implements ActionListener {
 
 
     public Form(){
-        listOfFunctions l[13]=new listOfFunctions();
-        
         DefaultListModel<String> listModel=new DefaultListModel<>();
-        listModel.addElement("sin");
-        listModel.addElement("cos");
-        listModel.addElement("tan");
-        listModel.addElement("tg");
-        listModel.addElement("ln");
-        listModel.addElement("pi");
-        listModel.addElement("e");
-        listModel.addElement("Om");
-        listModel.addElement("+");
-        listModel.addElement("-");
-        listModel.addElement("*");
-        listModel.addElement("/");
+        listModel.addElement(new listOfFunctions("Sinus","sin").toString());
+        listModel.addElement(new listOfFunctions("Cosinus","cos").toString());
+        listModel.addElement(new listOfFunctions("Tangens","tan").toString());
+        listModel.addElement(new listOfFunctions("Cotangens","ctg").toString());
+        listModel.addElement(new listOfFunctions("Logarytm","ln").toString());
+        listModel.addElement(new listOfFunctions("Liczba pi","pi").toString());
+        listModel.addElement(new listOfFunctions("Liczba Eulera","e").toString());
+        listModel.addElement(new listOfFunctions("Omega","Om").toString());
+        listModel.addElement(new listOfFunctions("Dodawanie","+").toString());
+        listModel.addElement(new listOfFunctions("Odejmowanie","-").toString());
+        listModel.addElement(new listOfFunctions("Mnozenie","*").toString());
+        listModel.addElement(new listOfFunctions("Dzielenie","/").toString());
         listModel.addElement("Last result");
         functionsList.setModel(listModel);
+        
         functionsList.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
