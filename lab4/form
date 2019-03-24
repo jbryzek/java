@@ -1,0 +1,144 @@
+import org.mariuszgromada.math.mxparser.Expression;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.text.MessageFormat;
+
+public class Form implements ActionListener {
+    private JButton evalButton;
+    private JTextField formulaInput;
+    private JTextArea historyTextArea;
+    private JPanel mainPanel;
+    private JList functionsList;
+    private JMenuBar menuBar =new JMenuBar();
+    private JMenu menu = new JMenu("Options");
+    private JMenuItem reset=new JMenuItem("Reset");
+    private JMenuItem exit=new JMenuItem("Exit");
+    private JFrame frame = new JFrame("Calculator");
+
+    private class listOfFunctions{
+        private String printableName;
+        private String functionName;
+
+        public listOfFunctions(String pN, String fN){
+            printableName=pN;
+            functionName=fN;
+        }
+
+        public String getFunctionName(){
+            return functionName;
+        }
+
+        @Override
+        public String toString() {
+            return printableName;
+        }
+    }
+
+
+    public Form(){
+        listOfFunctions l[13]=new listOfFunctions();
+        
+        DefaultListModel<String> listModel=new DefaultListModel<>();
+        listModel.addElement("sin");
+        listModel.addElement("cos");
+        listModel.addElement("tan");
+        listModel.addElement("tg");
+        listModel.addElement("ln");
+        listModel.addElement("pi");
+        listModel.addElement("e");
+        listModel.addElement("Om");
+        listModel.addElement("+");
+        listModel.addElement("-");
+        listModel.addElement("*");
+        listModel.addElement("/");
+        listModel.addElement("Last result");
+        functionsList.setModel(listModel);
+        functionsList.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+                String item = (String) functionsList.getSelectedValue();
+                formulaInput.setText(formulaInput.getText() + item + "()");
+                formulaInput.requestFocus();
+                formulaInput.setCaretPosition(formulaInput.getText().length() - 1);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) { }
+
+            @Override
+            public void mouseReleased(MouseEvent e) { }
+
+            @Override
+            public void mouseEntered(MouseEvent e) { }
+
+            @Override
+            public void mouseExited(MouseEvent e) { }
+        });
+
+        formulaInput.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) { }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_UP) {
+                    System.out.println("Arrow up!");
+
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) { }
+        });
+
+        reset.addActionListener(this);
+        exit.addActionListener(this);
+        evalButton.addActionListener(this);
+        formulaInput.addActionListener(this);
+
+        menu.add(reset);
+        menu.addSeparator();
+        menu.add(exit);
+        menuBar.add(menu);
+
+        historyTextArea.setEditable(false);
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e){
+        Object z=e.getSource();
+        System.out.println(z);
+        if(z==exit){
+            try {
+                frame.dispose();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }else if(z==reset){
+            historyTextArea.setText(null);
+            formulaInput.setText(null);
+        }else if(z==evalButton || z == formulaInput){
+            String eq = formulaInput.getText();
+            Expression expression = new Expression(eq);
+            double res = expression.calculate();
+            String entry=MessageFormat.format("{0}\n \t\t\t = {1}\n--------------\n",eq,res);
+            historyTextArea.setText(historyTextArea.getText() + entry);
+            formulaInput.setText(null);
+        }
+    }
+
+    public static void main(String[] args) {
+        Form form = new Form();
+        form.frame.setContentPane(form.mainPanel);
+        form.frame.setPreferredSize(new Dimension(1000,700)); //wtf
+        form.frame.setLocation(200,200);
+        form.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        form.frame.pack();
+        form.frame.setVisible(true);
+        form.frame.setJMenuBar(form.menuBar);
+    }
+}
