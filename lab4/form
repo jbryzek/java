@@ -1,9 +1,29 @@
 import org.mariuszgromada.math.mxparser.Expression;
+import sun.plugin2.message.Message;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.MessageFormat;
+
+class listOfFunctions{
+    private String printableName;
+    private String functionName;
+
+    public listOfFunctions(String pN, String fN){
+        printableName=pN;
+        functionName=fN;
+    }
+
+    public String getFunctionName(){
+        return functionName;
+    }
+
+    @Override
+    public String toString() {
+        return printableName;
+    }
+}
 
 public class Form implements ActionListener {
     private JButton evalButton;
@@ -16,26 +36,6 @@ public class Form implements ActionListener {
     private JMenuItem reset=new JMenuItem("Reset");
     private JMenuItem exit=new JMenuItem("Exit");
     private JFrame frame = new JFrame("Calculator");
-
-    private class listOfFunctions{
-        private String printableName;
-        private String functionName;
-
-        public listOfFunctions(String pN, String fN){
-            printableName=pN;
-            functionName=fN;
-        }
-
-        public String getFunctionName(){
-            return functionName;
-        }
-
-        @Override
-        public String toString() {
-            return printableName;
-        }
-    }
-
 
     public Form(){
         DefaultListModel<listOfFunctions> listModel=new DefaultListModel<>();
@@ -58,14 +58,22 @@ public class Form implements ActionListener {
             @Override
             public void mouseClicked(MouseEvent e) {
 
-                String item = (String) functionsList.getSelectedValue();
+                String item = (String) functionsList.getSelectedValue(); //.getFunctionName()
                 if(item=="sin"||item=="cos"||item=="tan"||item=="ctan") {
                     formulaInput.setText(formulaInput.getText() + item + "()");
-                }else {
-                    formulaInput.setText(formulaInput.getText() + item);
+                    formulaInput.requestFocus();
+                    formulaInput.setCaretPosition(formulaInput.getText().length() - 1);
+                }else if(item=="Last result"){
+                    String s=historyTextArea.getText();
+                    String[] lines=s.split("\n");
+                    s=lines[lines.length-2];
+                    formulaInput.setText(s);
                 }
-                formulaInput.requestFocus();
-                formulaInput.setCaretPosition(formulaInput.getText().length() - 1);
+                else{
+                    formulaInput.setText(formulaInput.getText() + item);
+                    formulaInput.requestFocus();
+                    formulaInput.setCaretPosition(formulaInput.getText().length());
+                }
             }
 
             @Override
@@ -89,7 +97,9 @@ public class Form implements ActionListener {
             public void keyPressed(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_UP) {
                     System.out.println("Arrow up!");
-
+                    String s=historyTextArea.getText();
+                    String[] lines=s.split("\n");
+                    s=lines[lines.length-3];
                 }
             }
 
@@ -126,6 +136,12 @@ public class Form implements ActionListener {
             formulaInput.setText(null);
         }else if(z==evalButton || z == formulaInput){
             String eq = formulaInput.getText();
+            char[] t=eq.toCharArray();
+            for(int i=0;i<t.length;i++){
+                if(t[i]>65){
+                    JOptionPane.showMessageDialog(null, "Message","Musi byc liczba",JOptionPane.ERROR_MESSAGE);
+                }
+            }
             Expression expression = new Expression(eq);
             double res = expression.calculate();
             String entry=MessageFormat.format("{0}\n \t\t\t = {1}\n--------------\n",eq,res);
@@ -137,7 +153,7 @@ public class Form implements ActionListener {
     public static void main(String[] args) {
         Form form = new Form();
         form.frame.setContentPane(form.mainPanel);
-        form.frame.setPreferredSize(new Dimension(1000,700)); //wtf
+        form.frame.setPreferredSize(new Dimension(1000,700));
         form.frame.setLocation(200,200);
         form.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         form.frame.pack();
