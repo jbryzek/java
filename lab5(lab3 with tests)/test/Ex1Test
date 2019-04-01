@@ -1,0 +1,24 @@
+package Ex1Test;
+
+import Ex1.Matrix;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.runner.SelectPackages;
+import org.junit.runner.RunWith;
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("Ex1")
+
+class MatrixTest {
+
+    @Test()
+    public void shouldNotAdd() {
+        Matrix<Integer> m1= new Matrix<>(2,3,new Integer[2][3],3);
+        Matrix<Integer> m2= new Matrix<>(3,3,new Integer[3][3],3);
+        Assertions.assertThrows(IllegalArgumentException.class,() ->{
+           m1.add(m2);
+        });
+
+    }
+}
