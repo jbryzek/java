@@ -1,0 +1,69 @@
+package Ex4Test;
+
+import Ex4.Exercise4;
+import Ex4.NoSolutionException;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.runner.SelectPackages;
+import org.junit.runner.RunWith;
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("Ex4")
+
+class Exercise4Test {
+    float[] arr;
+    Exercise4 ex;
+
+    @BeforeEach
+    public void initializeBefore(){
+        arr= new float[5];
+        ex=new Exercise4();
+    }
+
+    @AfterAll
+    static public void onTheEnd(){
+        System.out.println("End of tests");
+    }
+
+    @Test
+    public void shouldWorkProperly() throws NoSolutionException {
+        arr[0]=2;
+        arr[1]=3;
+        arr[2]=8;
+        arr[3]=1;
+        arr[4]=4;
+        int target=10;
+        int[] result=ex.solution(arr,target);
+        int[] a={0,2};
+        Assertions.assertArrayEquals(a,result);
+    }
+
+    @Test
+    public void shouldNotWorkProperly() throws NoSolutionException {
+        arr[0]=2;
+        arr[1]=3;
+        arr[2]=8;
+        arr[3]=1;
+        arr[4]=4;
+        int target=10;
+        int[] result=ex.solution(arr,target);
+        Assertions.assertNotEquals(1,result[0]);
+    }
+
+    @Test
+    public void shouldThrowException(){
+        arr[0]=2;
+        arr[1]=3;
+        arr[2]=2;
+        arr[3]=1;
+        arr[4]=4;
+        int target=10;
+        Assertions.assertThrows(NoSolutionException.class,() -> {
+            ex.solution(arr, target);
+        });
+    }
+
+}
