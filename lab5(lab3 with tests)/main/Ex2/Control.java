@@ -1,0 +1,28 @@
+package Ex2;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class Control  {
+    public static void main (String []args) throws TooBigNumberException, TooBigSizeException {
+        List<Integer> list=new ArrayList<>();
+        System.out.println("Write numbers to add them to the list, write -10 to stop it");
+        Scanner scanner=new Scanner(System.in);
+        int parametr = scanner.nextInt();
+        while(parametr!=(-10)){
+            list.add(parametr);
+            Scanner scanner1 = new Scanner(System.in);
+            parametr = scanner1.nextInt();
+            if(parametr>1000000){
+                throw new TooBigNumberException();
+            }
+        }
+        for(int i=0;i<list.size();i++){
+            System.out.println(i+1+": "+list.get(i));
+        }
+        Exercise2 ex=new Exercise2();
+        System.out.println(ex.solution(list));
+
+    }
+}
