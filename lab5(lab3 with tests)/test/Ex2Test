@@ -1,0 +1,74 @@
+package Ex2Test;
+
+import Ex2.Exercise2;
+import Ex2.TooBigSizeException;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.runner.SelectPackages;
+import org.junit.runner.RunWith;
+
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("Ex2")
+
+class Exercise2Test {
+    List<Integer> list;
+    Exercise2 ex;
+
+    @BeforeEach
+    public void initializeBefore(){
+        list=new ArrayList<>();
+        ex=new Exercise2();
+    }
+
+    @AfterAll
+    static public void onTheEnd(){
+        System.out.println("End of tests");
+    }
+
+    @Test()
+    public void shouldWorkProperly() throws TooBigSizeException {
+        list.add(1);
+        list.add(2);
+        list.add(4);
+        list.add(6);
+        list.add(8);
+        Assertions.assertEquals(3,ex.solution(list));
+    }
+    @Test
+    public void shouldNotWorkProperly() throws TooBigSizeException {
+        list.add(1);
+        list.add(2);
+        list.add(4);
+        list.add(6);
+        list.add(8);
+        Assertions.assertNotEquals(1, ex.solution(list));
+    }
+
+    @Test
+    public void shouldThrowException() {
+        Assertions.assertThrows(TooBigSizeException.class, () -> {
+            for (int i = 0; i < 1002; i++) {
+                list.add(i);
+                ex.solution(list);
+            }
+        });
+    }
+
+    @Test
+    public void checkingTime(){
+        Assertions.assertTimeout(Duration.ofMillis(10),()->{
+            list.add(1);
+            list.add(2);
+            list.add(4);
+            list.add(6);
+            list.add(8);
+        });
+    }
+}
