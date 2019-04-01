@@ -1,0 +1,186 @@
+package Ex5Test;
+
+import Ex5.ChooseSort;
+import Ex5.SortAlgorithm;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.time.Duration;
+import java.util.Random;
+
+class ChooseSortTest {
+    ChooseSort chooseSort;
+    private int[] optimisticArray;
+    private int [] realisticArray;
+    private int [] pessimisticArray;
+    int SIZE;
+
+    @BeforeEach
+    public void initializeBefore(){
+        SIZE=1000;
+        chooseSort=new ChooseSort();
+        optimisticArray=new int[SIZE];
+        realisticArray=new int[SIZE];
+        pessimisticArray=new int[SIZE];
+
+        for(int i=0;i<optimisticArray.length;i++){
+            optimisticArray[i]=i;
+        }
+
+        for(int i=0;i<realisticArray.length;i++){
+            Random random = new Random();
+            realisticArray[i]=random.nextInt();
+        }
+
+        for(int i=0;i<pessimisticArray.length;i++){
+            pessimisticArray[i]=SIZE-1-i;
+        }
+    }
+
+    @AfterAll
+    static public void onTheEnd(){
+        System.out.println("End of tests");
+    }
+
+    @Test
+    public void shouldNotWorkProperlyBubble(){
+        Assertions.assertNotEquals(realisticArray[0],pessimisticArray[0]);
+    }
+
+    @Test
+    public void shouldWorkProperlyBubble(){
+         chooseSort.sort(pessimisticArray, SortAlgorithm.BUBBLE);
+         Assertions.assertArrayEquals(optimisticArray,pessimisticArray);
+    }
+
+    @Test
+    public void shouldWorkProperlyShell(){
+        chooseSort.sort(pessimisticArray,SortAlgorithm.SHELL);
+        Assertions.assertArrayEquals(optimisticArray,pessimisticArray);
+    }
+
+    @Test
+    public void shouldWorkProperlyQuick(){
+         chooseSort.sort(pessimisticArray,SortAlgorithm.QUICK);
+         Assertions.assertArrayEquals(optimisticArray,pessimisticArray);
+    }
+
+    @Test
+    public void shouldWorkProperlyInsert(){
+        chooseSort.sort(pessimisticArray,SortAlgorithm.INSERT);
+        Assertions.assertArrayEquals(optimisticArray,pessimisticArray);
+    }
+
+    @Test
+    public void shouldWorkProperlyMerge(){
+        chooseSort.sort(pessimisticArray,SortAlgorithm.MERGE);
+        Assertions.assertArrayEquals(optimisticArray,pessimisticArray);
+    }
+
+    @Test
+    public void checkingTimeBubblePessimistic(){
+        Assertions.assertTimeout(Duration.ofMillis(100),()->{
+            chooseSort.sort(pessimisticArray,SortAlgorithm.BUBBLE);
+        });
+    }
+
+    @Test
+    public void checkingTimeBubbleRealistic(){
+        Assertions.assertTimeout(Duration.ofMillis(100),()->{
+            chooseSort.sort(realisticArray,SortAlgorithm.BUBBLE);
+        });
+    }
+
+    @Test
+    public void checkingTimeBubbleOptimistic(){
+        Assertions.assertTimeout(Duration.ofMillis(100),()->{
+            chooseSort.sort(optimisticArray,SortAlgorithm.BUBBLE);
+        });
+    }
+
+    @Test
+    public void checkingTimeMergePessimistic(){
+        Assertions.assertTimeout(Duration.ofMillis(100),()->{
+            chooseSort.sort(pessimisticArray,SortAlgorithm.MERGE);
+        });
+    }
+
+    @Test
+    public void checkingTimeMergeRealistic(){
+        Assertions.assertTimeout(Duration.ofMillis(100),()->{
+            chooseSort.sort(realisticArray,SortAlgorithm.MERGE);
+        });
+    }
+
+    @Test
+    public void checkingTimeMergeOptimistic(){
+        Assertions.assertTimeout(Duration.ofMillis(100),()->{
+            chooseSort.sort(optimisticArray,SortAlgorithm.MERGE);
+        });
+    }
+
+    @Test
+    public void checkingTimeShellPessimistic(){
+        Assertions.assertTimeout(Duration.ofMillis(100),()->{
+            chooseSort.sort(pessimisticArray,SortAlgorithm.SHELL);
+        });
+    }
+
+    @Test
+    public void checkingTimeShellRealistic(){
+        Assertions.assertTimeout(Duration.ofMillis(100),()->{
+            chooseSort.sort(realisticArray,SortAlgorithm.SHELL);
+        });
+    }
+
+    @Test
+    public void checkingTimeShellOptimistic(){
+        Assertions.assertTimeout(Duration.ofMillis(100),()->{
+            chooseSort.sort(optimisticArray,SortAlgorithm.SHELL);
+        });
+    }
+
+    @Test
+    public void checkingTimeInsertPessimistic(){
+        Assertions.assertTimeout(Duration.ofMillis(100),()->{
+            chooseSort.sort(pessimisticArray,SortAlgorithm.INSERT);
+        });
+    }
+
+    @Test
+    public void checkingTimeInsertRealistic(){
+        Assertions.assertTimeout(Duration.ofMillis(100),()->{
+            chooseSort.sort(realisticArray,SortAlgorithm.INSERT);
+        });
+    }
+
+    @Test
+    public void checkingTimeInsertOptimistic(){
+        Assertions.assertTimeout(Duration.ofMillis(100),()->{
+            chooseSort.sort(optimisticArray,SortAlgorithm.INSERT);
+        });
+    }
+
+    @Test
+    public void checkingTimeQuickPessimistic(){
+        Assertions.assertTimeout(Duration.ofMillis(100),()->{
+            chooseSort.sort(pessimisticArray,SortAlgorithm.QUICK);
+        });
+    }
+
+    @Test
+    public void checkingTimeQuickRealistic(){
+        Assertions.assertTimeout(Duration.ofMillis(100),()->{
+            chooseSort.sort(realisticArray,SortAlgorithm.QUICK);
+        });
+    }
+
+    @Test
+    public void checkingTimeQuickOptimistic(){
+        Assertions.assertTimeout(Duration.ofMillis(100),()->{
+            chooseSort.sort(optimisticArray,SortAlgorithm.QUICK);
+        });
+    }
+}
