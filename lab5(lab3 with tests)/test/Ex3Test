@@ -1,0 +1,39 @@
+package Ex3Test;
+
+import Ex3.Exercise3;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.runner.SelectPackages;
+import org.junit.runner.RunWith;
+
+@RunWith(JUnitPlatform.class)
+@SelectPackages("Ex3")
+
+class Exercise3Test {
+
+    @Test
+    public void shouldWorkProperly(){
+        String a="ababa";
+        String b="ab";
+        Exercise3 ex=new Exercise3();
+        Assertions.assertEquals(3,ex.substring(a,b));
+    }
+
+    @Test
+    public void shouldNotWorkProperly(){
+        String a="ababa";
+        String b="ab";
+        Exercise3 ex=new Exercise3();
+        Assertions.assertNotEquals(2,ex.substring(a,b));
+    }
+
+    @Test
+    public void condition(){
+        String a="ababa";
+        String b="abc";
+        Exercise3 ex=new Exercise3();
+        Assertions.assertEquals(-1,ex.substring(a,b));
+    }
+
+}
